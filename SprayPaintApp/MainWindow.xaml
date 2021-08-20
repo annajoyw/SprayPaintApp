@@ -7,6 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <InkCanvas/>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30*" />
+            <ColumnDefinition Width="349*" />
+            <ColumnDefinition Width="30*" />
+        </Grid.ColumnDefinitions>
+        <InkCanvas Margin="15,56,15,56" Grid.Column="1" Name="myInkCanvas" MouseRightButtonUp="RightMouseUpHandler"/>
+
+        <Button Height="23" HorizontalAlignment="Left"
+        Margin="29,0,0,381" Name="btnLoad" VerticalAlignment="Bottom"
+        Width="75" Click="btnLoad_Click" Grid.ColumnSpan="2">_Load Image</Button>
+        <Image  Name="imageBrush"
+        Stretch="Fill" Grid.Column="1" />
+            
     </Grid>
 </Window>
