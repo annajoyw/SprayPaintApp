@@ -1,9 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
+	  <AssetTargetFallback>uap10.0.19041</AssetTargetFallback>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+	   <AssetTargetFallback>uap10.0.19041</AssetTargetFallback>	  
+    <StartupObject>SprayPaintApp.App</StartupObject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Toolkit.Wpf.UI.Controls" Version="6.1.2" />
+  </ItemGroup>
 
 </Project>
