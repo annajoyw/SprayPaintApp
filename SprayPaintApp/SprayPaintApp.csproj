@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.1.0" />
     <PackageReference Include="Microsoft.Toolkit.Wpf.UI.Controls" Version="6.1.2" />
+    <PackageReference Include="telerik.ui.for.wpf.netcore.xaml.trial" Version="2021.2.615" />
   </ItemGroup>
 
 </Project>

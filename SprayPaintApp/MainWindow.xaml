@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:SprayPaintApp"
-        xmlns:Controls="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls" x:Class="SprayPaintApp.MainWindow"
+        xmlns:Controls="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="SprayPaintApp.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -29,23 +29,40 @@
 
                 <Grid>
 
-                    <ToolBar x:Name="drawingToolbar" Height="50" Margin="10,10,-10,346">
-                        <RadioButton Content="Select" Height="50" Width="80" GroupName="DrawGroup" Click="DrawButton_Click"/>
+
+                    <InkCanvas x:Name="DrawingCanvas" Width="614" Margin="24,78,156,47">
+                        <InkCanvas.DefaultDrawingAttributes>
+                            <DrawingAttributes x:Name="strokeAttribute" Width="3" Height="3" Color="Black"/>
+                        </InkCanvas.DefaultDrawingAttributes>
+                    </InkCanvas>
+                    <Label Content="Controls" HorizontalAlignment="Left" Height="27" Margin="681,65,0,0" VerticalAlignment="Top" Width="96" HorizontalContentAlignment="Center" FontWeight="Bold"/>
+
+
+
+                    <telerik:RadPanelBar Margin="674,65,0,0">
+                        <telerik:RadPanelBarItem Header="Tools" />
+                        <telerik:RadPanelBarItem Header="Color" >
+                            <xctk:ColorPicker x:Name="_colorPicker"
+                                              Height="25"
+                                 SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
+                        </telerik:RadPanelBarItem>
+                        <telerik:RadPanelBarItem Header="Brush Size">
+                            <telerik:RadNumericUpDown Height="20" x:Name="_numericUpDown" Minimum="1" Maximum="100" ValueChanged="NumericUpDown_BrushSize"/>
+                        </telerik:RadPanelBarItem>
+                    </telerik:RadPanelBar>
+                    <ToolBar x:Name="drawingToolbar" Margin="10,10,-10,333">
+                        <RadioButton Content="Load Image" Height="50" Width="80" GroupName="DrawGroup" Click="DrawButton_Click"/>
                         <RadioButton Content="Draw" Height="50" Width="80" GroupName="DrawGroup" Click="DrawButton_Click" />
                         <RadioButton Content="Erase" Height="50" Width="80" GroupName="DrawGroup" Click="DrawButton_Click" />
                         <Button Content="Save" Height="50" Width="80" Click="SaveButton_Click"/>
                         <Button Content="Open" Height="50" Width="80" Click="OpenButton_Click"/>
                     </ToolBar>
 
-                    <InkCanvas x:Name="DrawingCanvas" Height="299" Width="614" Margin="24,60,156,47">
-                        <InkCanvas.DefaultDrawingAttributes>
-                            <DrawingAttributes x:Name="strokeAttribute" Width="3" Height="3" Color="Black"/>
-                        </InkCanvas.DefaultDrawingAttributes>
-                    </InkCanvas>
-                    <Label Content="Color Selector" HorizontalAlignment="Left" Height="27" Margin="687,60,0,0" VerticalAlignment="Top" Width="96" HorizontalContentAlignment="Center" FontWeight="Bold"/>
-                    <xctk:ColorPicker x:Name="_colorPicker"
-                           VerticalAlignment="Top" Width="97" Margin="687,79,10,0"
-                                      SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
+
+
+
+
+
 
 
 

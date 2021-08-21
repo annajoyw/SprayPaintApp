@@ -15,7 +15,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Telerik.Windows.Controls;
+using Xceed.Wpf.Toolkit;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace SprayPaintApp
 {
@@ -26,8 +28,9 @@ namespace SprayPaintApp
     {
         public MainWindow()
         {
+
             InitializeComponent();
-           
+            PanalBar();
         }
         private void DrawButton_Click(object sender, RoutedEventArgs e)
         {
@@ -59,15 +62,7 @@ namespace SprayPaintApp
         }
         private void DrawPanel_KeyUp(object sender, KeyEventArgs e) 
         {
-            var colorButton = sender as RadioButton;
-            String color = colorButton.Background.ToString();
-            if ((int)e.Key >= 35 && (int)e.Key <= 68)
-            {
-                switch (colorButton)
-                {
-                    
-                }
-            }
+            
         }
         
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -89,6 +84,7 @@ namespace SprayPaintApp
             }
         }
 
+        //sets selected color to inkcanvas stroke
         private void ClrPcker_Background_SelectedColorChanged(object sender, RoutedEventArgs e)
         {
             strokeAttribute.Color = (Color)_colorPicker.SelectedColor;
@@ -101,6 +97,27 @@ namespace SprayPaintApp
             ((InkCanvas)sender).Strokes.Transform(m, true);
         }
 
-       
+
+        private void NumericUpDown_BrushSize(object sender, RadRangeBaseValueChangedEventArgs e)
+        {
+            strokeAttribute.Width = (double)e.NewValue;
+            strokeAttribute.Height = (double)e.NewValue;
+     
+
+
+        }
+
+        private void PanalBar()
+        {
+            RadPanelBar myPanelBar = new RadPanelBar();
+            RadPanelBarItem item1 = new RadPanelBarItem() { Header = "Tools" };
+            RadPanelBarItem item2 = new RadPanelBarItem() { Header = "Color" };
+            RadPanelBarItem item3 = new RadPanelBarItem() { Header = "Brush Size" };
+
+            myPanelBar.Items.Add(item1);
+            myPanelBar.Items.Add(item2);
+            myPanelBar.Items.Add(item3);
+        }
+   
     }
 }
