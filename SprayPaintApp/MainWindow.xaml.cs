@@ -12,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -30,7 +31,8 @@ namespace SprayPaintApp
         {
 
             InitializeComponent();
-            PanalBar();
+
+          
         }
         private void DrawButton_Click(object sender, RoutedEventArgs e)
         {
@@ -56,7 +58,7 @@ namespace SprayPaintApp
             }
             else if (radioBpressed == "Erase")
             {
-                this.DrawingCanvas.EditingMode = InkCanvasEditingMode.EraseByStroke;
+                this.DrawingCanvas.EditingMode = InkCanvasEditingMode.EraseByPoint;
             }
            
         }
@@ -64,23 +66,52 @@ namespace SprayPaintApp
         {
             
         }
-        
+        private void SprayPaint_Click(object sender, RoutedEventArgs e)
+        {
+            strokeAttribute.IsHighlighter = true;
+            strokeAttribute.StylusTip = StylusTip.Ellipse;
+        }
+
+        private void Pen_Click(object sender, RoutedEventArgs e)
+        {
+            strokeAttribute = DrawingCanvas.DefaultDrawingAttributes;
+            strokeAttribute.IsHighlighter = false;
+        }
+
+        private void PaintBrush_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            using(FileStream fs = new FileStream("MyPicture.bin",
-                FileMode.Create))
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                  "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                  "Portable Network Graphic (*.png)|*.png";
+
+            if (saveFileDialog1.ShowDialog() == true)
             {
-                this.DrawingCanvas.Strokes.Save(fs);
+                FileStream fs = new FileStream(saveFileDialog1.FileName,
+                                               FileMode.Create);
+                DrawingCanvas.Strokes.Save(fs);
+                fs.Close();
             }
         }
 
         private void OpenButton_Click(object sender, RoutedEventArgs e)
         {
-            using (FileStream fs = new FileStream("MyPicture.bin",
-                FileMode.Open, FileAccess.Read))
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                  "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                  "Portable Network Graphic (*.png)|*.png";
+
+            if (openFileDialog1.ShowDialog() == true)
             {
-                StrokeCollection sc = new StrokeCollection(fs);
-                this.DrawingCanvas.Strokes = sc;
+                FileStream fs = new FileStream(openFileDialog1.FileName,
+                                               FileMode.Open);
+                DrawingCanvas.Strokes = new StrokeCollection(fs);
+                fs.Close();
             }
         }
 
@@ -102,9 +133,6 @@ namespace SprayPaintApp
         {
             strokeAttribute.Width = (double)e.NewValue;
             strokeAttribute.Height = (double)e.NewValue;
-     
-
-
         }
 
         private void PanalBar()
@@ -118,6 +146,24 @@ namespace SprayPaintApp
             myPanelBar.Items.Add(item2);
             myPanelBar.Items.Add(item3);
         }
-   
+
+        private void ZoomButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string buttonPressed = button.Content.ToString();
+            if (buttonPressed == "+")
+            {
+                DrawingCanvas.Height += 5;
+                DrawingCanvas.Width += 5;
+               
+            }
+            if (buttonPressed == "-")
+            {
+                viewbox1.Height -= 5;
+                viewbox1.Width -= 5;
+            }
+        }
+
+
     }
 }

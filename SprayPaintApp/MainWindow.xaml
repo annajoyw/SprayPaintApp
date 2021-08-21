@@ -23,7 +23,7 @@
                     <Label Content="Label" Grid.Column="4" HorizontalAlignment="Left" Height="98" VerticalAlignment="Center" Width="118" Margin="246,0,0,0"/>
                 </Grid>
             </TabItem>
-          
+
             <TabItem Header="Paint" KeyUp="DrawPanel_KeyUp" >
                 <Grid ShowGridLines="False">
                     <Grid.ColumnDefinitions>
@@ -32,12 +32,12 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="75*"></RowDefinition>
+                        <RowDefinition Height="128*"></RowDefinition>
+                        <RowDefinition Height="203*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    
-                    <TextBlock Text="Merging top 3 Cells" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"></TextBlock>
+
+                    <TextBlock Text="Merging top 3 Cells" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Grid.Column="1" Height="24" Width="156"/>
                     <ToolBar x:Name="drawingToolbar" Grid.ColumnSpan="3">
                         <RadioButton Content="Load Image" Height="50" Width="80" GroupName="DrawGroup" Click="DrawButton_Click"/>
                         <RadioButton Content="Draw" Height="50" Width="80" GroupName="DrawGroup" Click="DrawButton_Click" />
@@ -45,28 +45,35 @@
                         <Button Content="Save" Height="50" Width="80" Click="SaveButton_Click"/>
                         <Button Content="Open" Height="50" Width="80" Click="OpenButton_Click"/>
                     </ToolBar>
-                    
-                    <TextBlock Text="Rowspan=2 Colspan=2" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"></TextBlock>
-                    <InkCanvas x:Name="DrawingCanvas" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" >
-                        <InkCanvas.DefaultDrawingAttributes>
-                            <DrawingAttributes x:Name="strokeAttribute" Width="3" Height="3" Color="Black"/>
-                        </InkCanvas.DefaultDrawingAttributes>
-                    </InkCanvas>
-                    
-                    <TextBlock Text="Rowspan=2" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"></TextBlock>
-                    <telerik:RadPanelBar  Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" BorderBrush="#FF848484" BorderThickness="0,0,0,0" Background="Gray">
+
+                    <TextBlock Text="Rowspan=2 Colspan=2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Height="24" Width="184"/>
+                    <Viewbox Name="viewbox1" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="0,11,0,0" >
+
+                        <InkCanvas x:Name="DrawingCanvas"  >
+                            <InkCanvas.DefaultDrawingAttributes>
+                                <DrawingAttributes x:Name="strokeAttribute" Width="3" Height="3" Color="Black"/>
+                            </InkCanvas.DefaultDrawingAttributes>
+                        </InkCanvas>
+
+
+                    </Viewbox>
+
+
+
+
+                    <telerik:RadPanelBar Grid.Row="1" Grid.Column="1"   BorderBrush="White" BorderThickness="0,0,0,0" Background="White" Grid.ColumnSpan="2" Margin="264,11,0,0"  >
                         <telerik:RadPanelBarItem Header="Tools">
-                            <Button Width="30" Height="30">
+                            <Button Width="30" Height="30" Click="SprayPaint_Click">
                                 <Button.Background>
                                     <ImageBrush ImageSource="/paint-spray.png" Stretch="Uniform"/>
                                 </Button.Background>
                             </Button>
-                            <Button  Width="30" Height="30">
+                            <Button  Width="30" Height="30" Click="Pen_Click">
                                 <Button.Background>
                                     <ImageBrush ImageSource="/pen-filled-writing-tool.png" Stretch="Uniform"/>
                                 </Button.Background>
                             </Button>
-                            <Button Width="30" Height="30" >
+                            <Button Width="30" Height="30" Click="PaintBrush_Click">
                                 <Button.Background>
                                     <ImageBrush ImageSource="/big-paint-brush.png" Stretch="Uniform"/>
                                 </Button.Background>
@@ -81,9 +88,14 @@
                             <telerik:RadNumericUpDown Height="20" x:Name="_numericUpDown" Minimum="1" Maximum="100" ValueChanged="NumericUpDown_BrushSize"/>
                         </telerik:RadPanelBarItem>
                     </telerik:RadPanelBar>
+                    <Button Content="+" Grid.Column="2" HorizontalAlignment="Left" Margin="86,101,0,0" Grid.Row="1" VerticalAlignment="Top" Width="20" Height="20" Click="ZoomButton_Click"/>
+                    <Button Content="-" Grid.Column="2" HorizontalAlignment="Center" Margin="0,101,0,0" Grid.Row="1" VerticalAlignment="Top" Width="20" Height="20" Click="ZoomButton_Click"/>
+                    <telerik:Label Content="Zoom" Grid.Column="2" HorizontalAlignment="Left" Margin="40,99,0,0" Grid.Row="1" VerticalAlignment="Top" Height="22" Width="42"/>
+
+
                 </Grid>
             </TabItem>
-            
+
             <TabItem Header="Gallery">
                 <Grid ShowGridLines="True">
                     <Grid.ColumnDefinitions>
