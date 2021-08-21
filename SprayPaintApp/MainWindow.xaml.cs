@@ -36,7 +36,7 @@ namespace SprayPaintApp
         {
             var radiobutton = sender as RadioButton;
             string radioBpressed = radiobutton.Content.ToString();
-            if(radioBpressed == "Select")
+            if(radioBpressed == "Load Image")
             {
                 OpenFileDialog op = new OpenFileDialog();
                 op.Title = "Select a picture";

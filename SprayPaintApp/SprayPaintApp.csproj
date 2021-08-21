@@ -10,9 +10,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="big-paint-brush.png" />
+    <None Remove="paint-spray.png" />
+    <None Remove="pen-filled-writing-tool.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.1.0" />
     <PackageReference Include="Microsoft.Toolkit.Wpf.UI.Controls" Version="6.1.2" />
     <PackageReference Include="telerik.ui.for.wpf.netcore.xaml.trial" Version="2021.2.615" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="big-paint-brush.png" />
+    <Resource Include="paint-spray.png" />
+    <Resource Include="pen-filled-writing-tool.png" />
   </ItemGroup>
 
 </Project>
