@@ -59,33 +59,17 @@ namespace SprayPaintApp
         }
         private void DrawPanel_KeyUp(object sender, KeyEventArgs e) 
         {
-            if((int)e.Key >= 35 && (int)e.Key <= 68)
+            var colorButton = sender as RadioButton;
+            String color = colorButton.Background.ToString();
+            if ((int)e.Key >= 35 && (int)e.Key <= 68)
             {
-                switch ((int)e.Key)
+                switch (colorButton)
                 {
-                    case 35:
-                        strokeAttribute.Width = 2;
-                        strokeAttribute.Height = 2;
-                        break;
-
-                    case 36:
-                        strokeAttribute.Width = 4;
-                        strokeAttribute.Height = 4;
-                        break;
-
-                    case 37:
-                        strokeAttribute.Width = 6;
-                        strokeAttribute.Height = 6;
-                        break;
-
-                    case 38:
-                        strokeAttribute.Width = 8;
-                        strokeAttribute.Height = 8;
-                        break;
+                    
                 }
             }
         }
-
+        
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             using(FileStream fs = new FileStream("MyPicture.bin",
@@ -104,6 +88,11 @@ namespace SprayPaintApp
                 this.DrawingCanvas.Strokes = sc;
             }
         }
+
+        private void ClrPcker_Background_SelectedColorChanged(object sender, RoutedEventArgs e)
+        {
+            strokeAttribute.Color = (Color)_colorPicker.SelectedColor;
+        }
         private void RightMouseUpHandler(object sender,
                                  System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -112,20 +101,6 @@ namespace SprayPaintApp
             ((InkCanvas)sender).Strokes.Transform(m, true);
         }
 
-        private void btnLoad_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog op = new OpenFileDialog();
-            op.Title = "Select a picture";
-            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
-              "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-              "Portable Network Graphic (*.png)|*.png";
-            if (op.ShowDialog() == true)
-            {
-                ImageBrush imageBrush = new ImageBrush();
-                imageBrush.ImageSource = new BitmapImage(new Uri(op.FileName));
-                DrawingCanvas.Background = imageBrush;
-            }
-
-        }
+       
     }
 }

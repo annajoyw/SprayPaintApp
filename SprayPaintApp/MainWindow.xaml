@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:SprayPaintApp"
         xmlns:Controls="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls" x:Class="SprayPaintApp.MainWindow"
         mc:Ignorable="d"
@@ -12,24 +13,44 @@
 
         <TabControl Grid.Column="1" Grid.Row="1">
             <TabItem Header="Welcome">
-                <Grid Background="#FFE5E5E5"/>
+
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27*"/>
+                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="351*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Label" Grid.Column="4" HorizontalAlignment="Left" Height="98" VerticalAlignment="Center" Width="118" Margin="246,0,0,0"/>
+                </Grid>
             </TabItem>
             <TabItem Header="Paint" KeyUp="DrawPanel_KeyUp">
 
-                <StackPanel>
-                    <ToolBar Name="drawingToolbar" Height="50">
+                <Grid>
+
+                    <ToolBar x:Name="drawingToolbar" Height="50" Margin="10,10,-10,346">
                         <RadioButton Content="Select" Height="50" Width="80" GroupName="DrawGroup" Click="DrawButton_Click"/>
                         <RadioButton Content="Draw" Height="50" Width="80" GroupName="DrawGroup" Click="DrawButton_Click" />
                         <RadioButton Content="Erase" Height="50" Width="80" GroupName="DrawGroup" Click="DrawButton_Click" />
                         <Button Content="Save" Height="50" Width="80" Click="SaveButton_Click"/>
                         <Button Content="Open" Height="50" Width="80" Click="OpenButton_Click"/>
                     </ToolBar>
-                    <InkCanvas Name="DrawingCanvas" Height="299">
+
+                    <InkCanvas x:Name="DrawingCanvas" Height="299" Width="614" Margin="24,60,156,47">
                         <InkCanvas.DefaultDrawingAttributes>
                             <DrawingAttributes x:Name="strokeAttribute" Width="3" Height="3" Color="Black"/>
                         </InkCanvas.DefaultDrawingAttributes>
-                        </InkCanvas>
-                </StackPanel>
+                    </InkCanvas>
+                    <Label Content="Color Selector" HorizontalAlignment="Left" Height="27" Margin="687,60,0,0" VerticalAlignment="Top" Width="96" HorizontalContentAlignment="Center" FontWeight="Bold"/>
+                    <xctk:ColorPicker x:Name="_colorPicker"
+                           VerticalAlignment="Top" Width="97" Margin="687,79,10,0"
+                                      SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
+
+
+
+
+                </Grid>
 
             </TabItem>
 
