@@ -99,20 +99,9 @@ namespace SprayPaintApp
             }
         }
 
-        private void OpenButton_Click(object sender, RoutedEventArgs e)
+        private void RestartButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
-                  "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-                  "Portable Network Graphic (*.png)|*.png";
-
-            if (openFileDialog1.ShowDialog() == true)
-            {
-                FileStream fs = new FileStream(openFileDialog1.FileName,
-                                               FileMode.Open);
-                DrawingCanvas.Strokes = new StrokeCollection(fs);
-                fs.Close();
-            }
+            DrawingCanvas.Strokes.RemoveAll();
         }
 
         //sets selected color to inkcanvas stroke
@@ -133,18 +122,6 @@ namespace SprayPaintApp
         {
             strokeAttribute.Width = (double)e.NewValue;
             strokeAttribute.Height = (double)e.NewValue;
-        }
-
-        private void PanalBar()
-        {
-            RadPanelBar myPanelBar = new RadPanelBar();
-            RadPanelBarItem item1 = new RadPanelBarItem() { Header = "Tools" };
-            RadPanelBarItem item2 = new RadPanelBarItem() { Header = "Color" };
-            RadPanelBarItem item3 = new RadPanelBarItem() { Header = "Brush Size" };
-
-            myPanelBar.Items.Add(item1);
-            myPanelBar.Items.Add(item2);
-            myPanelBar.Items.Add(item3);
         }
 
         private void ZoomButton_Click(object sender, RoutedEventArgs e)

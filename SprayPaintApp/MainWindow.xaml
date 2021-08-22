@@ -43,7 +43,7 @@
                         <RadioButton Content="Draw" Height="50" Width="80" GroupName="DrawGroup" Click="DrawButton_Click" />
                         <RadioButton Content="Erase" Height="50" Width="80" GroupName="DrawGroup" Click="DrawButton_Click" />
                         <Button Content="Save" Height="50" Width="80" Click="SaveButton_Click"/>
-                        <Button Content="Open" Height="50" Width="80" Click="OpenButton_Click"/>
+                        <Button Content="Restart" Height="50" Width="80" Click="RestartButton_Click"/>
                     </ToolBar>
 
                     <TextBlock Text="Rowspan=2 Colspan=2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Height="24" Width="184"/>
