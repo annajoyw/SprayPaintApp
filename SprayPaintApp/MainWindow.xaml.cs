@@ -32,13 +32,13 @@ namespace SprayPaintApp
 
             InitializeComponent();
 
-          
+
         }
         private void DrawButton_Click(object sender, RoutedEventArgs e)
         {
             var radiobutton = sender as RadioButton;
             string radioBpressed = radiobutton.Content.ToString();
-            if(radioBpressed == "Load Image")
+            if (radioBpressed == "Load Image")
             {
                 OpenFileDialog op = new OpenFileDialog();
                 op.Title = "Select a picture";
@@ -52,7 +52,7 @@ namespace SprayPaintApp
                     DrawingCanvas.Background = imageBrush;
                 }
             }
-            else if(radioBpressed == "Draw")
+            else if (radioBpressed == "Draw")
             {
                 this.DrawingCanvas.EditingMode = InkCanvasEditingMode.Ink;
             }
@@ -60,27 +60,81 @@ namespace SprayPaintApp
             {
                 this.DrawingCanvas.EditingMode = InkCanvasEditingMode.EraseByPoint;
             }
+
+        }
+
+        private void ToolButton_Click(object sender, RoutedEventArgs e)
+        {
+            var radiobutton = sender as RadioButton;
+            string radioBpressed = radiobutton.Content.ToString();
+
+            if(radioBpressed == "AirBrush")
+            {
+                strokeAttribute.StylusTipTransform = new Matrix(1, 0, 0.5, 1, 1, 4);
+            }
+            else if(radioBpressed == "Pen")
+            {
+                strokeAttribute.IsHighlighter = false;
+                strokeAttribute.StylusTipTransform = new Matrix(1, 0, 0, 1, 0, 0);
+            }
+            else if (radioBpressed == "Marker")
+            {
+                strokeAttribute.StylusTipTransform = new Matrix(1, 0, 0, 5, 0, 0);
+            }
+            else if (radioBpressed == "Highlighter")
+            {
+                strokeAttribute.IsHighlighter = true;
+                strokeAttribute.StylusTip = StylusTip.Ellipse;
+            }
+        }
+        private void DrawPanel_KeyUp(object sender, KeyEventArgs e)
+        {
+
+        }
+        private void SprayPaintButton_Click(object sender, RoutedEventArgs e)
+        {
+            //double radius = strokeAttribute.Width/2;
+            //double area = radius * radius * Math.PI;
+            //double dotsPerTick = Math.Ceiling(area / 30);
+            //for (int i = 0; i < dotsPerTick; i++)
+            //{
+            //    double[] offset = randomPointInRadius(radius);
+            //}
+
+           // DrawingAttributes spray = new DrawingAttributes();
            
         }
-        private void DrawPanel_KeyUp(object sender, KeyEventArgs e) 
+    
+        private double[] randomPointInRadius(double radius)
         {
+            Random rnd = new Random();
+            double x =  rnd.NextDouble() * radius * 2;
+            double y = rnd.NextDouble() * radius * 2;
+            if (x * x + y * y <= 1)
+            {
+                x = x * radius;
+                y = y * radius;
+            }
+            double[] myArray = new double[] { x, y };
+            return myArray;
+
+        }
+
+        private void MarkerButton_Click(object sender, RoutedEventArgs e)
+        {
+            strokeAttribute.StylusTipTransform = new Matrix(1, 0, 0, 5, 0, 0);
+        }
+        private void PenButton_Click(object sender, RoutedEventArgs e)
+        {
+            strokeAttribute.Width = 4;
+            strokeAttribute.Height = 4;
             
         }
-        private void SprayPaint_Click(object sender, RoutedEventArgs e)
+
+        private void HighlighterButton_Click(object sender, RoutedEventArgs e)
         {
             strokeAttribute.IsHighlighter = true;
             strokeAttribute.StylusTip = StylusTip.Ellipse;
-        }
-
-        private void Pen_Click(object sender, RoutedEventArgs e)
-        {
-            strokeAttribute = DrawingCanvas.DefaultDrawingAttributes;
-            strokeAttribute.IsHighlighter = false;
-        }
-
-        private void PaintBrush_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -97,6 +151,33 @@ namespace SprayPaintApp
                 DrawingCanvas.Strokes.Save(fs);
                 fs.Close();
             }
+        }
+
+        private void SaveBitMapButton_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                  "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                  "Portable Network Graphic (*.png)|*.png";
+
+            if (saveFileDialog1.ShowDialog() == true)
+            {
+                FileStream fs = new FileStream(saveFileDialog1.FileName,
+                                               FileMode.Create);
+                int marg = int.Parse(DrawingCanvas.Margin.Left.ToString());
+                RenderTargetBitmap rtb =
+                        new RenderTargetBitmap((int)DrawingCanvas.ActualWidth - marg,
+                                (int)DrawingCanvas.ActualHeight - marg, 0, 0,
+                            PixelFormats.Default);
+                rtb.Render(DrawingCanvas);
+                BmpBitmapEncoder encoder = new BmpBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(rtb));
+
+                encoder.Save(fs);
+                fs.Close();
+            }
+
+           
         }
 
         private void RestartButton_Click(object sender, RoutedEventArgs e)
@@ -136,8 +217,8 @@ namespace SprayPaintApp
             }
             if (buttonPressed == "-")
             {
-                viewbox1.Height -= 5;
-                viewbox1.Width -= 5;
+                DrawingCanvas.Height -= 5;
+                DrawingCanvas.Width -= 5;
             }
         }
 
