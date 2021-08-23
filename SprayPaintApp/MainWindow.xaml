@@ -13,7 +13,7 @@
         <TabControl Grid.Column="1" Grid.Row="1" Background="White">
             <TabItem Header="Welcome">
 
-                <Grid ShowGridLines="False">
+                <Grid ShowGridLines="False" OpacityMask="#FFFCFEFC" Background="#FFFCFEFC">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
@@ -43,7 +43,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Paint" KeyUp="DrawPanel_KeyUp" Height="20" VerticalAlignment="Bottom" >
+            <TabItem Header="Paint" Height="20" VerticalAlignment="Bottom" >
                 <Grid ShowGridLines="False" Background="#FFEEF5FD">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="23*"></ColumnDefinition>
@@ -63,14 +63,14 @@
                         <RadioButton Content="Load Image" Height="50" Width="80" GroupName="DrawGroup" Click="DrawButton_Click"/>
                         <RadioButton Content="Draw" Height="50" Width="80" GroupName="DrawGroup" Click="DrawButton_Click" />
                         <RadioButton Content="Erase" Height="50" Width="80" GroupName="DrawGroup" Click="DrawButton_Click" />
-                        <Button Content="Save" Height="50" Width="80" Click="SaveButton_Click"/>
+                        <Button Content="Save" Height="50" Width="80" />
                         <Button Content="Save as New Image" Height="50" Width="110" Click="SaveBitMapButton_Click"/>
                         <Button Content="Restart" Height="50" Width="80" Click="RestartButton_Click"/>
                     </ToolBar>
 
 
 
-                    <InkCanvas Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="3" x:Name="DrawingCanvas" Background="#FFDEDEDE" Margin="4,73,23,20">
+                    <InkCanvas Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="3" x:Name="DrawingCanvas" Background="#FFDEDEDE" Margin="4,3,23,20" Grid.Row="1">
                         <InkCanvas.DefaultDrawingAttributes>
                             <DrawingAttributes x:Name="strokeAttribute" Width="3" Height="3" Color="Black"/>
                         </InkCanvas.DefaultDrawingAttributes>
@@ -83,7 +83,7 @@
 
 
 
-                    <telerik:RadPanelBar Grid.Column="3"   BorderBrush="White" BorderThickness="0,0,0,0" Background="#FFEEF5FD" Grid.ColumnSpan="2" Margin="252,1,11,9" Grid.Row="1"  >
+                    <telerik:RadPanelBar Grid.Column="4"   BorderBrush="White" BorderThickness="0,0,0,0" Background="#FFEEF5FD" Margin="10,1,11,9" Grid.Row="1"  >
                         <telerik:RadPanelBarItem HorizontalContentAlignment="Center" Header="Tools" Background="#FFEEF5FD">
                             <RadioButton  Content="Air Brush" GroupName="ToolGroup" Click="ToolButton_Click">
 
@@ -127,15 +127,12 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Row0 Column0" Grid.Row="0" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    <TextBlock Text="Row0 Column1" Grid.Row="0" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    <TextBlock Text="Row0 Column2" Grid.Row="0" Grid.Column="2" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    <TextBlock Text="Row1 Column0" Grid.Row="1" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    <TextBlock Text="Row1 Column1" Grid.Row="1" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    <TextBlock Text="Row1 Column2" Grid.Row="1" Grid.Column="2" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    <TextBlock Text="Row2 Column0" Grid.Row="2" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    <TextBlock Text="Row2 Column1" Grid.Row="2" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    <TextBlock Text="Row2 Column2" Grid.Row="2" Grid.Column="2" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                    <DataGrid Grid.Row="0" AutoGenerateColumns="False" Margin="5" Name="InkGrid">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Canvas Id" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="Byte" Binding="{Binding Canvas}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
 
 

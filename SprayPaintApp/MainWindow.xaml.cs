@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using SprayPaintApp.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,11 +30,22 @@ namespace SprayPaintApp
     {
         public MainWindow()
         {
-
             InitializeComponent();
 
-
         }
+
+
+        //returns byte array of the inkcanvas to store in a DB
+        private byte[] getByteArray()
+        {
+            MemoryStream ms = new MemoryStream();
+            DrawingCanvas.Strokes.Save(ms);
+            byte[] bytes = ms.ToArray();
+            return bytes;
+        }
+     
+        //update
+        //delete
         private void DrawButton_Click(object sender, RoutedEventArgs e)
         {
             var radiobutton = sender as RadioButton;
@@ -87,10 +99,20 @@ namespace SprayPaintApp
                 strokeAttribute.StylusTip = StylusTip.Ellipse;
             }
         }
-        private void DrawPanel_KeyUp(object sender, KeyEventArgs e)
-        {
 
+        private void ClrPcker_Background_SelectedColorChanged(object sender, RoutedEventArgs e)
+        {
+            strokeAttribute.Color = (Color)_colorPicker.SelectedColor;
         }
+
+        private void NumericUpDown_BrushSize(object sender, RadRangeBaseValueChangedEventArgs e)
+        {
+            strokeAttribute.Width = (double)e.NewValue;
+            strokeAttribute.Height = (double)e.NewValue;
+        }
+
+        /*the idea here was to create a "spray paint" effect by coloring random dots within a radius, I created the method that calculates
+        where to put the random dots however I'm struggling to figure out how to edit the stroke attribute to represent the effect*/
         private void SprayPaintButton_Click(object sender, RoutedEventArgs e)
         {
             //double radius = strokeAttribute.Width/2;
@@ -102,7 +124,6 @@ namespace SprayPaintApp
             //}
 
            // DrawingAttributes spray = new DrawingAttributes();
-           
         }
     
         private double[] randomPointInRadius(double radius)
@@ -117,32 +138,13 @@ namespace SprayPaintApp
             }
             double[] myArray = new double[] { x, y };
             return myArray;
-
         }
 
-        private void MarkerButton_Click(object sender, RoutedEventArgs e)
-        {
-            strokeAttribute.StylusTipTransform = new Matrix(1, 0, 0, 5, 0, 0);
-        }
-        private void PenButton_Click(object sender, RoutedEventArgs e)
-        {
-            strokeAttribute.Width = 4;
-            strokeAttribute.Height = 4;
-            
-        }
-
-        private void HighlighterButton_Click(object sender, RoutedEventArgs e)
-        {
-            strokeAttribute.IsHighlighter = true;
-            strokeAttribute.StylusTip = StylusTip.Ellipse;
-        }
-
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        //saves only the ink
+        private void SaveInkButton_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
-                  "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-                  "Portable Network Graphic (*.png)|*.png";
+            saveFileDialog1.Filter = "isf files (*.isf)|*.isf";
 
             if (saveFileDialog1.ShowDialog() == true)
             {
@@ -153,6 +155,7 @@ namespace SprayPaintApp
             }
         }
 
+        //saves new image with ink
         private void SaveBitMapButton_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
@@ -176,8 +179,6 @@ namespace SprayPaintApp
                 encoder.Save(fs);
                 fs.Close();
             }
-
-           
         }
 
         private void RestartButton_Click(object sender, RoutedEventArgs e)
@@ -185,24 +186,13 @@ namespace SprayPaintApp
             DrawingCanvas.Strokes.RemoveAll();
         }
 
-        //sets selected color to inkcanvas stroke
-        private void ClrPcker_Background_SelectedColorChanged(object sender, RoutedEventArgs e)
-        {
-            strokeAttribute.Color = (Color)_colorPicker.SelectedColor;
-        }
+        //the following two methods are still a WIP
         private void RightMouseUpHandler(object sender,
                                  System.Windows.Input.MouseButtonEventArgs e)
         {
             Matrix m = new Matrix();
             m.Scale(1.1d, 1.1d);
             ((InkCanvas)sender).Strokes.Transform(m, true);
-        }
-
-
-        private void NumericUpDown_BrushSize(object sender, RadRangeBaseValueChangedEventArgs e)
-        {
-            strokeAttribute.Width = (double)e.NewValue;
-            strokeAttribute.Height = (double)e.NewValue;
         }
 
         private void ZoomButton_Click(object sender, RoutedEventArgs e)
@@ -221,7 +211,5 @@ namespace SprayPaintApp
                 DrawingCanvas.Width -= 5;
             }
         }
-
-
     }
 }
